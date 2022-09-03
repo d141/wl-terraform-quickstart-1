@@ -1,1 +1,1 @@
-# aws-databricks-terraform
+# databricks-terraform-e2e-examples
