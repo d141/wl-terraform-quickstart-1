@@ -18,7 +18,7 @@ variable "iam_role_arn" {
      sensitive = true
 }
 
-variable "owner" {
+variable "resource_owner" {
   type = string
   sensitive = true
 }
@@ -33,11 +33,11 @@ variable "region" {
 
 variable "tags" {
   default = {
-    "Owner" = var.owner
+    "Owner" = var.resource_owner
   }
 }
 
-variable "prefix" {
+variable "resource_prefix" {
   type = string
 }
 
@@ -52,15 +52,16 @@ variable "relay_vpce_service" {
 variable "private_dns_enabled" { default = false }
 
 locals {
-  prefix                       = "${var.prefix}"
+  prefix                       = "${var.resource_prefix}"
   private_subnets_cidr         = [cidrsubnet(var.cidr_block, 3, 0), cidrsubnet(var.cidr_block, 3, 1)]
   public_subnets_cidr      = [cidrsubnet(var.cidr_block, 3, 2), cidrsubnet(var.cidr_block, 3, 3)]
   //firewall_public_subnets_cidr = [cidrsubnet(var.cidr_block, 3, 4)]
   sg_egress_ports              = [443, 3306, 6666]
   sg_ingress_protocol          = ["tcp", "udp"]
   sg_egress_protocol           = ["tcp", "udp"]
-  //db_root_bucket               = "${var.prefix}${random_string.naming.result}-rootbucket.s3.amazonaws.com"
+  //db_root_bucket               = "${var.resource_prefix}${random_string.naming.result}-rootbucket.s3.amazonaws.com"
 }
+
 terraform {
   required_providers {
     databricks = {
