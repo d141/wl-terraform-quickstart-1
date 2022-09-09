@@ -13,36 +13,8 @@ resource "azurerm_network_security_group" "this" {
   tags                = local.tags
 }
 
-# resource "azurerm_network_security_rule" "aad" {
-#   name                        = "AllowAAD"
-#   priority                    = 200
-#   direction                   = "Outbound"
-#   access                      = "Allow"
-#   protocol                    = "Tcp"
-#   source_port_range           = "*"
-#   destination_port_range      = "443"
-#   source_address_prefix       = "VirtualNetwork"
-#   destination_address_prefix  = "AzureActiveDirectory"
-#   resource_group_name         = azurerm_resource_group.this.name
-#   network_security_group_name = azurerm_network_security_group.this.name
-# }
-
-# resource "azurerm_network_security_rule" "azfrontdoor" {
-#   name                        = "AllowAzureFrontDoor"
-#   priority                    = 201
-#   direction                   = "Outbound"
-#   access                      = "Allow"
-#   protocol                    = "Tcp"
-#   source_port_range           = "*"
-#   destination_port_range      = "443"
-#   source_address_prefix       = "VirtualNetwork"
-#   destination_address_prefix  = "AzureFrontDoor.Frontend"
-#   resource_group_name         = azurerm_resource_group.this.name
-#   network_security_group_name = azurerm_network_security_group.this.name
-# }
-
-resource "azurerm_subnet" "container" {
-  name                 = "${local.prefix}-container"
+resource "azurerm_subnet" "host" {
+  name                 = "${local.prefix}-host"
   resource_group_name  = azurerm_resource_group.this.name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = [cidrsubnet(local.cidr_block, 3, 0)]
@@ -59,8 +31,8 @@ resource "azurerm_subnet" "container" {
   }
 }
 
-resource "azurerm_subnet_network_security_group_association" "container" {
-  subnet_id                 = azurerm_subnet.container.id
+resource "azurerm_subnet_network_security_group_association" "host" {
+  subnet_id                 = azurerm_subnet.host.id
   network_security_group_id = azurerm_network_security_group.this.id
 }
 
@@ -68,14 +40,14 @@ variable "private_subnet_endpoints" {
   default = []
 }
 
-resource "azurerm_subnet" "host" {
-  name                 = "${local.prefix}-host"
+resource "azurerm_subnet" "container" {
+  name                 = "${local.prefix}-container"
   resource_group_name  = azurerm_resource_group.this.name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = [cidrsubnet(local.cidr_block, 3, 1)]
-  private_endpoint_network_policies_enabled = true
-#   enforce_private_link_endpoint_network_policies = true
-#   enforce_private_link_service_network_policies  = true
+
+  enforce_private_link_endpoint_network_policies = true
+  enforce_private_link_service_network_policies  = true
 
   delegation {
     name = "databricks"
@@ -91,8 +63,8 @@ resource "azurerm_subnet" "host" {
   service_endpoints = var.private_subnet_endpoints
 }
 
-resource "azurerm_subnet_network_security_group_association" "host" {
-  subnet_id                 = azurerm_subnet.host.id
+resource "azurerm_subnet_network_security_group_association" "container" {
+  subnet_id                 = azurerm_subnet.container.id
   network_security_group_id = azurerm_network_security_group.this.id
 }
 
@@ -102,6 +74,5 @@ resource "azurerm_subnet" "plsubnet" {
   resource_group_name                            = azurerm_resource_group.this.name
   virtual_network_name                           = azurerm_virtual_network.this.name
   address_prefixes                               = [cidrsubnet(local.cidr_block, 3, 2)]
-  private_endpoint_network_policies_enabled = true
-#   enforce_private_link_endpoint_network_policies = true 
+  enforce_private_link_endpoint_network_policies = true 
 }

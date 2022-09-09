@@ -1,5 +1,5 @@
-resource "azurerm_private_endpoint" "dp_to_cp" {
-  name                = "dataplaneprivatendpoint"
+resource "azurerm_private_endpoint" "dp-to-cp" {
+  name                = "pe-${local.prefix}-dp-to-cp"
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
   subnet_id           = azurerm_subnet.plsubnet.id 
@@ -12,26 +12,26 @@ resource "azurerm_private_endpoint" "dp_to_cp" {
   }
 
   private_dns_zone_group {
-    name                 = "private-dns-zone-dataplane"
-    private_dns_zone_ids = [azurerm_private_dns_zone.dataplane_private_dns.id]
+    name                 = "${local.prefix}-private-dnsz-dp-to-cp"
+    private_dns_zone_ids = [azurerm_private_dns_zone.dp_to_cp.id]
   }
 }
 
-resource "azurerm_private_dns_zone" "dataplane_private_dns" {
+resource "azurerm_private_dns_zone" "dp_to_cp" {
   name                = "privatelink.azuredatabricks.net"
   resource_group_name = azurerm_resource_group.this.name
 }
 
-resource "azurerm_private_dns_zone_virtual_network_link" "dataplane_private_dns_link" {
-  name                  = "private-dns-zone-link"
+resource "azurerm_private_dns_zone_virtual_network_link" "dp_to_cp" {
+  name                  = "${local.prefix}-dp-to-cp-dns-link"
   resource_group_name   = azurerm_resource_group.this.name
-  private_dns_zone_name = azurerm_private_dns_zone.dataplane_private_dns.name
+  private_dns_zone_name = azurerm_private_dns_zone.dp_to_cp.name
   virtual_network_id    = azurerm_virtual_network.this.id 
 }
 
 resource "azurerm_private_dns_cname_record" "cnamerecord" { 
-  name                = "${var.region}.pl-auth"
-  zone_name           = azurerm_private_dns_zone.dataplane_private_dns.name
+  name                = "${azurerm_resource_group.this.location}.pl-auth"
+  zone_name           = azurerm_private_dns_zone.dp_to_cp.name
   resource_group_name = azurerm_resource_group.this.name
   ttl                 = 60
   record              = azurerm_databricks_workspace.this.workspace_url
@@ -39,8 +39,8 @@ resource "azurerm_private_dns_cname_record" "cnamerecord" {
 
 
 //dbfs pvt endpoint
-resource "azurerm_private_endpoint" "dbfs_private_endpoint" {
-  name                = "dbfs-private-endpoint"
+resource "azurerm_private_endpoint" "dbfs" {
+  name                = "pe-${local.prefix}-dbfs"
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
   subnet_id           = azurerm_subnet.plsubnet.id 
@@ -54,18 +54,18 @@ resource "azurerm_private_endpoint" "dbfs_private_endpoint" {
   }
 
   private_dns_zone_group {
-    name                 = "private-dns-zone-dbfs"
-    private_dns_zone_ids = [azurerm_private_dns_zone.dataplane_private_dns.id]
+    name                 = "${local.prefix}-private-dnsz-dbfs"
+    private_dns_zone_ids = [azurerm_private_dns_zone.dbfs.id]
   }
 }
-resource "azurerm_private_dns_zone" "private_dns_zone_dbfs" {
+resource "azurerm_private_dns_zone" "dbfs" {
   name                = "privatelink.blob.core.windows.net"
   resource_group_name = azurerm_resource_group.this.name
 }
 
-resource "azurerm_private_dns_zone_virtual_network_link" "private_dns_zone_dbfs_link" {
-  name                  = "private-dns-zone-dbfs-link"
+resource "azurerm_private_dns_zone_virtual_network_link" "dbfs" {
+  name                  = "${local.prefix}-dbfs-dns-link"
   resource_group_name   = azurerm_resource_group.this.name
-  private_dns_zone_name = azurerm_private_dns_zone.private_dns_zone_dbfs.name
+  private_dns_zone_name = azurerm_private_dns_zone.dbfs.name
   virtual_network_id    = azurerm_virtual_network.this.id 
 }

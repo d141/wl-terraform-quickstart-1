@@ -12,7 +12,7 @@ data "external" "me" {
 locals {
   prefix = var.resource_prefix
   cidr_block = var.cidr_block
-  dbfsname = join("", ["dbfs", trim(local.prefix, "-")]) 
+  dbfsname = join("", [trim(local.prefix, "-"), var.region, "dbfs"]) 
   tags = {
     Owner       = lookup(data.external.me.result, "name")
   }
@@ -34,4 +34,12 @@ output "databricks_azure_workspace_resource_id" {
 
 output "workspace_url" {
   value = "https://${azurerm_databricks_workspace.this.workspace_url}/"
+}
+
+output "region" {
+    value = var.region
+}
+
+output "adls_path" {
+    value = join("", [format("%s@%s.dfs.core.windows.net/", azurerm_storage_container.unity_catalog.name, azurerm_storage_account.unity_catalog.name), "managed/"])
 }
