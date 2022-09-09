@@ -8,10 +8,11 @@ module "vpc_endpoints" {
 
   endpoints = {
     s3 = {
+      count = length(local.private_subnets_cidr)
       service      = "s3"
       service_type = "Gateway"
       route_table_ids = flatten([
-        aws_route_table.private_rt.id
+        aws_route_table.private_rt[*].id
       ])
       tags = {
         Name = "${local.prefix}-s3-vpc-endpoint"
@@ -32,7 +33,6 @@ module "vpc_endpoints" {
       tags = {
         Name = "${local.prefix}-kinesis-vpc-endpoint"
       }
-    },
+    }
   }
-  tags = var.tags
 }

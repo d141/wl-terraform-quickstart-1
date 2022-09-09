@@ -1,10 +1,10 @@
 // DBFS Root
 resource "aws_s3_bucket" "root_storage_bucket" {
-  bucket = "${local.prefix}-rootbucket"
+  bucket = local.dbfsname
   force_destroy = true
-  tags = merge(var.tags, {
-    Name = "${local.prefix}-rootbucket"
-  })
+  tags = {
+    Name = local.dbfsname
+  }
 }
 
 resource "aws_s3_bucket_acl" "root_bucket_acls" {
@@ -46,11 +46,4 @@ resource "aws_s3_bucket_policy" "root_bucket_policy" {
   bucket     = aws_s3_bucket.root_storage_bucket.id
   policy     = data.databricks_aws_bucket_policy.this.json
   depends_on = [aws_s3_bucket_public_access_block.root_storage_bucket]
-}
-
-resource "databricks_mws_storage_configurations" "this" {
-  provider                   = databricks.mws
-  account_id                 = var.databricks_account_id
-  bucket_name                = aws_s3_bucket.root_storage_bucket.bucket
-  storage_configuration_name = "${local.prefix}-root-bucket"
 }
