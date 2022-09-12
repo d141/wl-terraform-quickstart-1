@@ -33,7 +33,27 @@ variable "resource_owner" {
   sensitive = true
 }
 
-variable "cidr_block" {
+variable "vpc_cidr_range" {
+  type = string
+}
+
+variable "private_subnets_cidr" {
+  type = string
+}
+
+variable "public_subnets_cidr" {
+  type = string
+}
+
+variable "firewall_subnets_cidr" {
+  type = string
+}
+
+variable "privatelink_subnets_cidr" {
+  type = string
+}
+
+variable "availability_zones" {
   type = string
 }
 
@@ -53,6 +73,26 @@ variable "relay_vpce_service" {
   type = string
 }
 
-variable "private_dns_enabled" { 
-  default = true 
+variable "webapp_url" {
+  type = string
+}
+
+variable "tunnel_url" {
+  type = string
+}
+
+variable "metastore_url" {
+  type = string
+}
+
+variable "control_plane_infra" {
+  type = string
+}
+
+variable "firewall_allow_list" {
+  type = string
+}
+
+variable "firewall_protocol_deny_list" {
+  type = string
 }

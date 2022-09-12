@@ -36,3 +36,25 @@ module "vpc_endpoints" {
     }
   }
 }
+
+# resource "aws_vpc_endpoint" "backend_rest" {
+#   vpc_id             = aws_vpc.dataplane_vpc.id
+#   count              = length(local.privatelink_subnets_cidr)
+#   service_name       = var.workspace_vpce_service
+#   vpc_endpoint_type  = "Interface"
+#   security_group_ids = [aws_security_group.sg.id]
+#   subnet_ids         = aws_subnet.privatelink[*].id
+#   private_dns_enabled = true
+#   depends_on = [aws_subnet.privatelink]
+# }
+
+# resource "aws_vpc_endpoint" "backend_relay" {
+#   vpc_id             = aws_vpc.dataplane_vpc.id
+#   count              = length(local.privatelink_subnets_cidr)
+#   service_name       = var.relay_vpce_service
+#   vpc_endpoint_type  = "Interface"
+#   security_group_ids = [aws_security_group.sg.id]
+#   subnet_ids         = aws_subnet.privatelink[*].id
+#   private_dns_enabled = true
+#   depends_on = [aws_subnet.privatelink]
+# }

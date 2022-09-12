@@ -1,5 +1,5 @@
 resource "aws_vpc" "dataplane_vpc" {
-  cidr_block           = var.cidr_block
+  cidr_block           = var.vpc_cidr_range
   enable_dns_hostnames = true
   enable_dns_support   = true
   tags = {
@@ -36,7 +36,7 @@ resource "aws_network_acl" "dataplane" {
     protocol   = "all"
     rule_no    = 100
     action     = "allow"
-    cidr_block = var.cidr_block
+    cidr_block = var.vpc_cidr_range
     from_port  = 0
     to_port    = 0
   }
@@ -68,6 +68,30 @@ resource "aws_subnet" "public" {
     tags = {
         Name = "${local.prefix}-public-${element(local.availability_zones, count.index)}"
      }
+}
+
+// Firewall Subnet
+resource "aws_subnet" "firewall" {
+  vpc_id                  = aws_vpc.dataplane_vpc.id
+  count                   = length(local.firewall_subnets_cidr)
+  cidr_block              = element(local.firewall_subnets_cidr, count.index)
+  availability_zone       = element(local.availability_zones, count.index)
+  map_public_ip_on_launch = false
+  tags = {
+    Name = "${local.prefix}-firewall-${element(local.availability_zones, count.index)}"
+  }
+}
+
+// PrivateLink Subnet
+resource "aws_subnet" "privatelink" {
+  vpc_id                  = aws_vpc.dataplane_vpc.id
+  count                   = length(local.privatelink_subnets_cidr)
+  cidr_block              = element(local.privatelink_subnets_cidr, count.index)
+  availability_zone       = element(local.availability_zones, count.index)
+  map_public_ip_on_launch = false
+  tags = {
+    Name = "${local.prefix}-privatelink-${element(local.availability_zones, count.index)}"
+  }
 }
 
 // IGW
@@ -154,6 +178,23 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
+// Firewall RT
+resource "aws_route_table" "firewall_rt" {
+  count              = length(local.firewall_subnets_cidr)
+  vpc_id             = aws_vpc.dataplane_vpc.id
+  tags = {
+    Name = "${local.prefix}-firewall-rt-${element(local.availability_zones, count.index)}"
+  }
+}
+
+// IGW RT
+resource "aws_route_table" "igw_rt" {
+  vpc_id             = aws_vpc.dataplane_vpc.id
+    tags = {
+      Name = "${local.prefix}-igw-rt"
+  }
+}
+
 // Private RT Associations
 resource "aws_route_table_association" "private" {
   count          = length(local.private_subnets_cidr)
@@ -169,8 +210,21 @@ resource "aws_route_table_association" "public" {
   depends_on = [aws_subnet.public]
 }
 
+// Firewall RT Associations
+resource "aws_route_table_association" "firewall" {
+  count          = length(local.firewall_subnets_cidr)
+  subnet_id      = element(aws_subnet.firewall.*.id, count.index)
+  route_table_id = element(aws_route_table.firewall_rt.*.id, count.index)
+}
+
+// IGW RT Associations
+resource "aws_route_table_association" "igw" {
+  gateway_id     = aws_internet_gateway.igw.id
+  route_table_id = aws_route_table.igw_rt.id
+}
+
 // Private Route
-resource "aws_route" "private_ngw" {
+resource "aws_route" "private" {
   count                  = length(local.private_subnets_cidr)
   route_table_id         = element(aws_route_table.private_rt.*.id, count.index)
   destination_cidr_block = "0.0.0.0/0"
@@ -178,9 +232,27 @@ resource "aws_route" "private_ngw" {
 }
 
 // Public Route
-resource "aws_route" "public_igw" {
+resource "aws_route" "public" {
   count                  = length(local.public_subnets_cidr)
   route_table_id         = element(aws_route_table.public_rt.*.id, count.index)
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             =  aws_internet_gateway.igw.id
+  vpc_endpoint_id        = tolist(aws_networkfirewall_firewall.nfw.firewall_status[0].sync_states)[count.index].attachment[0].endpoint_id
+  depends_on             = [aws_networkfirewall_firewall.nfw]
+}
+
+// Firewall Route
+resource "aws_route" "firewall_outbound" {
+  count                  = length(local.firewall_subnets_cidr)
+  route_table_id         = element(aws_route_table.firewall_rt.*.id, count.index)
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             =  aws_internet_gateway.igw.id 
+}
+
+// Add a route back to FW
+resource "aws_route" "firewall_inbound" {
+  count                  = length(local.public_subnets_cidr)
+  route_table_id         = aws_route_table.igw_rt.id
+  destination_cidr_block = element(local.public_subnets_cidr, count.index)
+  vpc_endpoint_id        = tolist(aws_networkfirewall_firewall.nfw.firewall_status[0].sync_states)[count.index].attachment[0].endpoint_id
+  depends_on             = [aws_networkfirewall_firewall.nfw]
 }

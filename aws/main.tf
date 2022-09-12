@@ -1,17 +1,19 @@
 locals {
   prefix                       = var.resource_prefix
   owner                        = var.resource_owner
-  cidr_block                   = var.cidr_block
-  private_subnets_cidr         = [cidrsubnet(var.cidr_block, 3, 0), cidrsubnet(var.cidr_block, 3, 1)]
-  public_subnets_cidr          = [cidrsubnet(var.cidr_block, 5, 2), cidrsubnet(var.cidr_block, 5, 3)]
-  firewall_subnets_cidr        = [cidrsubnet(var.cidr_block, 5, 4), cidrsubnet(var.cidr_block, 5, 5)]
-  privatelink_subnets_cidr     = [cidrsubnet(var.cidr_block, 5, 6), cidrsubnet(var.cidr_block, 5, 7)]
+  vpc_cidr_range               = var.vpc_cidr_range
+  private_subnets_cidr         = split(",", var.private_subnets_cidr)
+  public_subnets_cidr          = split(",", var.public_subnets_cidr)
+  firewall_subnets_cidr        = split(",", var.firewall_subnets_cidr)
+  privatelink_subnets_cidr     = split(",", var.privatelink_subnets_cidr)
   sg_egress_ports              = [443, 3306, 6666]
   sg_ingress_protocol          = ["tcp", "udp"]
   sg_egress_protocol           = ["tcp", "udp"]
-  availability_zones           = ["${var.region}a", "${var.region}b"]
+  availability_zones           = split(",", var.availability_zones)
   dbfsname                     = join("", [local.prefix, "-", var.region, "-", "dbfsroot"]) 
   uc_bucketname                = join("", [local.prefix, "-", var.region, "-", "unity-catalog"]) 
+  firewall_allow_list          = split(",", var.firewall_allow_list)
+  firewall_protocol_deny_list  = split(",", var.firewall_protocol_deny_list)
 }
 
 module "databricks_cmk" {
