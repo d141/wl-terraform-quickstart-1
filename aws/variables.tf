@@ -73,14 +73,6 @@ variable "relay_vpce_service" {
   type = string
 }
 
-variable "webapp_url" {
-  type = string
-}
-
-variable "tunnel_url" {
-  type = string
-}
-
 variable "metastore_url" {
   type = string
 }

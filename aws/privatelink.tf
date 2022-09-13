@@ -37,24 +37,68 @@ module "vpc_endpoints" {
   }
 }
 
-# resource "aws_vpc_endpoint" "backend_rest" {
-#   vpc_id             = aws_vpc.dataplane_vpc.id
-#   count              = length(local.privatelink_subnets_cidr)
-#   service_name       = var.workspace_vpce_service
-#   vpc_endpoint_type  = "Interface"
-#   security_group_ids = [aws_security_group.sg.id]
-#   subnet_ids         = aws_subnet.privatelink[*].id
-#   private_dns_enabled = true
-#   depends_on = [aws_subnet.privatelink]
-# }
+resource "aws_security_group" "privatelink" {
+  vpc_id      = aws_vpc.dataplane_vpc.id
 
-# resource "aws_vpc_endpoint" "backend_relay" {
-#   vpc_id             = aws_vpc.dataplane_vpc.id
-#   count              = length(local.privatelink_subnets_cidr)
-#   service_name       = var.relay_vpce_service
-#   vpc_endpoint_type  = "Interface"
-#   security_group_ids = [aws_security_group.sg.id]
-#   subnet_ids         = aws_subnet.privatelink[*].id
-#   private_dns_enabled = true
-#   depends_on = [aws_subnet.privatelink]
-# }
+  ingress {
+    description = "Inbound rules"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    security_groups = [aws_security_group.sg.id]
+  }
+
+  ingress {
+    description = "Inbound rules"
+    from_port   = 6666
+    to_port     = 6666
+    protocol    = "tcp"
+    security_groups = [aws_security_group.sg.id]
+  }
+
+  egress {
+    description = "Outbound rules"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    security_groups = [aws_security_group.sg.id]
+  }
+
+  egress {
+    description = "Outbound rules"
+    from_port   = 6666
+    to_port     = 6666
+    protocol    = "tcp"
+    security_groups = [aws_security_group.sg.id]
+  }
+
+  tags = {
+    Name = "${local.prefix}-privatelink-sg"
+  }
+}
+
+resource "aws_vpc_endpoint" "backend_rest" {
+  vpc_id             = aws_vpc.dataplane_vpc.id
+  service_name       = var.workspace_vpce_service
+  vpc_endpoint_type  = "Interface"
+  security_group_ids = [aws_security_group.privatelink.id]
+  subnet_ids         =  aws_subnet.privatelink[*].id
+  private_dns_enabled = true
+  depends_on = [aws_subnet.privatelink]
+  tags = {
+    Name = "${local.prefix}-databricks-backend-rest"
+  }
+}
+
+resource "aws_vpc_endpoint" "backend_relay" {
+  vpc_id             = aws_vpc.dataplane_vpc.id
+  service_name       = var.relay_vpce_service
+  vpc_endpoint_type  = "Interface"
+  security_group_ids = [aws_security_group.privatelink.id]
+  subnet_ids         = aws_subnet.privatelink[*].id
+  private_dns_enabled = true
+  depends_on = [aws_subnet.privatelink]
+  tags = {
+    Name = "${local.prefix}-databricks-backend-relay"
+  }
+}

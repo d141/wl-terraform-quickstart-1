@@ -40,6 +40,8 @@ module "databricks_mws_workspace" {
   workspace_storage_cmk  = module.databricks_cmk.workspace_storage_cmk
   managed_services_cmk   = module.databricks_cmk.managed_services_cmk
   region                 = var.region
+  backend_rest           = aws_vpc_endpoint.backend_rest.id
+  backend_relay          = aws_vpc_endpoint.backend_relay.id
 }
 
 // create PAT token to provision entities within workspace

@@ -19,6 +19,44 @@ resource "aws_subnet" "private" {
   }
 }
 
+// Public Subnet
+resource "aws_subnet" "public" {
+
+  vpc_id                  = aws_vpc.dataplane_vpc.id
+  count                   = length(local.public_subnets_cidr)
+  cidr_block              = element(local.public_subnets_cidr, count.index)
+  availability_zone       = element(local.availability_zones, count.index)
+  map_public_ip_on_launch = true
+  tags = {
+      Name = "${local.prefix}-public-${element(local.availability_zones, count.index)}"
+  }
+}
+
+// Firewall Subnet
+resource "aws_subnet" "firewall" {
+  vpc_id                  = aws_vpc.dataplane_vpc.id
+  count                   = length(local.firewall_subnets_cidr)
+  cidr_block              = element(local.firewall_subnets_cidr, count.index)
+  availability_zone       = element(local.availability_zones, count.index)
+  map_public_ip_on_launch = false
+  tags = {
+    Name = "${local.prefix}-firewall-${element(local.availability_zones, count.index)}"
+  }
+}
+
+// PrivateLink Subnet
+resource "aws_subnet" "privatelink" {
+  vpc_id                  = aws_vpc.dataplane_vpc.id
+  count                   = length(local.privatelink_subnets_cidr)
+  cidr_block              = element(local.privatelink_subnets_cidr, count.index)
+  availability_zone       = element(local.availability_zones, count.index)
+  map_public_ip_on_launch = false
+  tags = {
+    Name = "${local.prefix}-privatelink-${element(local.availability_zones, count.index)}"
+  }
+}
+
+// Dataplane NACL
 resource "aws_network_acl" "dataplane" {
   vpc_id = aws_vpc.dataplane_vpc.id
   subnet_ids = concat(aws_subnet.private[*].id, aws_subnet.public[*].id)
@@ -57,43 +95,6 @@ resource "aws_network_acl" "dataplane" {
   }
 }
 
-// Public Subnet
-resource "aws_subnet" "public" {
-
-    vpc_id                  = aws_vpc.dataplane_vpc.id
-    count                   = length(local.public_subnets_cidr)
-    cidr_block              = element(local.public_subnets_cidr, count.index)
-    availability_zone       = element(local.availability_zones, count.index)
-    map_public_ip_on_launch = true
-    tags = {
-        Name = "${local.prefix}-public-${element(local.availability_zones, count.index)}"
-     }
-}
-
-// Firewall Subnet
-resource "aws_subnet" "firewall" {
-  vpc_id                  = aws_vpc.dataplane_vpc.id
-  count                   = length(local.firewall_subnets_cidr)
-  cidr_block              = element(local.firewall_subnets_cidr, count.index)
-  availability_zone       = element(local.availability_zones, count.index)
-  map_public_ip_on_launch = false
-  tags = {
-    Name = "${local.prefix}-firewall-${element(local.availability_zones, count.index)}"
-  }
-}
-
-// PrivateLink Subnet
-resource "aws_subnet" "privatelink" {
-  vpc_id                  = aws_vpc.dataplane_vpc.id
-  count                   = length(local.privatelink_subnets_cidr)
-  cidr_block              = element(local.privatelink_subnets_cidr, count.index)
-  availability_zone       = element(local.availability_zones, count.index)
-  map_public_ip_on_launch = false
-  tags = {
-    Name = "${local.prefix}-privatelink-${element(local.availability_zones, count.index)}"
-  }
-}
-
 // IGW
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.dataplane_vpc.id
@@ -121,8 +122,6 @@ resource "aws_nat_gateway" "ngw" {
 
 // SG
 resource "aws_security_group" "sg" {
-  name        = "${local.prefix}-sg"
-  description = "Databricks Data Plane SG"
   vpc_id = aws_vpc.dataplane_vpc.id
   depends_on  = [aws_vpc.dataplane_vpc]
 
@@ -156,7 +155,7 @@ resource "aws_security_group" "sg" {
     }
   }
   tags = {
-    Name = "${local.prefix}-sg"
+    Name = "${local.prefix}-dataplane-sg"
   }
 }
 

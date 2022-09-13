@@ -27,18 +27,18 @@ resource "databricks_metastore" "unity_catalog" {
   force_destroy = true
 }
 
-resource "databricks_metastore_data_access" "unity_catalog" {
-  provider     = databricks.created_workspace
-  metastore_id = databricks_metastore.unity_catalog.id
-  name         = var.uc_role_arn
-  aws_iam_role {
-    role_arn = var.uc_role_arn
-  }
-  is_default = true
-}
+# resource "databricks_metastore_data_access" "unity_catalog" {
+#   provider     = databricks.created_workspace
+#   metastore_id = databricks_metastore.unity_catalog.id
+#   name         = var.uc_role_arn
+#   aws_iam_role {
+#     role_arn = var.uc_role_arn
+#   }
+#   is_default = true
+# }
 
-resource "databricks_metastore_assignment" "unity_catalog" {
-  workspace_id         = module.databricks_mws_workspace.workspace_id
-  metastore_id         = databricks_metastore.unity_catalog.id
-  default_catalog_name = "hive"
-}
+# resource "databricks_metastore_assignment" "unity_catalog" {
+#   workspace_id         = module.databricks_mws_workspace.workspace_id
+#   metastore_id         = databricks_metastore.unity_catalog.id
+#   default_catalog_name = "hive"
+# }
