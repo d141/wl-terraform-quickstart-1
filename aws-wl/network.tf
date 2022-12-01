@@ -21,7 +21,6 @@ resource "aws_subnet" "private" {
 
 // Public Subnet
 resource "aws_subnet" "public" {
-
   vpc_id                  = aws_vpc.dataplane_vpc.id
   count                   = length(local.public_subnets_cidr)
   cidr_block              = element(local.public_subnets_cidr, count.index)

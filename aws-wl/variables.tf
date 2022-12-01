@@ -13,17 +13,12 @@ variable "databricks_account_id" {
   sensitive = true
 }
 
-variable "cross_account_role_arn" {
+variable "aws_access_key" {
   type = string
   sensitive = true
 }
 
-variable "uc_role_arn" {
-  type = string
-  sensitive = true
-}
-
-variable "cmk_admin" {
+variable "aws_secret_key" {
   type = string
   sensitive = true
 }
@@ -31,6 +26,14 @@ variable "cmk_admin" {
 variable "resource_owner" {
   type = string
   sensitive = true
+}
+
+variable "resource_prefix" {
+  type = string
+}
+
+variable "region" {
+  type = string
 }
 
 variable "vpc_cidr_range" {
@@ -57,14 +60,6 @@ variable "availability_zones" {
   type = string
 }
 
-variable "region" {
-  type = string
-}
-
-variable "resource_prefix" {
-  type = string
-}
-
 variable "workspace_vpce_service" {
   type = string
 }
@@ -77,14 +72,22 @@ variable "metastore_url" {
   type = string
 }
 
-variable "control_plane_infra" {
-  type = string
-}
-
 variable "firewall_allow_list" {
   type = string
 }
 
 variable "firewall_protocol_deny_list" {
+  type = string
+}
+
+variable "customer_name" {
+  type = string
+}
+
+variable "authoritative_user_email" {
+  type = string
+}
+
+variable "authoritative_user_full_name" {
   type = string
 }

@@ -6,12 +6,6 @@ variable "cross_account_role_arn" {
   type = string
 }
 
-variable "managed_services_cmk" { 
-}
-
-variable "workspace_storage_cmk" {
-}
-
 variable "databricks_account_id" {
   type = string
 }
@@ -41,5 +35,17 @@ variable "backend_rest"{
 }
 
 variable "backend_relay" {
+  type = string
+}
+
+variable "customer_name" {
+  type = string
+}
+
+variable "authoritative_user_email" {
+  type = string
+}
+
+variable "authoritative_user_full_name" {
   type = string
 }
