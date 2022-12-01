@@ -20,7 +20,7 @@ This Terraform Quickstart is meant to be a foundation for creating reusable Whit
     - Network Configuration (Backend PrivateLink Enabled)
     - External User Parameters (i.e. Authoritative User Parameters)
 
-![Architecture Diagram](img/White Label - Network Topology.png?raw=true "Title")
+![Architecture Diagram](img/White Label - Network Topology.png)
 
 # Areas of Customization:
 
