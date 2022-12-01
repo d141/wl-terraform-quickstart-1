@@ -12,7 +12,7 @@ This Terraform Quickstart is meant to be a foundation for creating reusable Whit
     - AWS VPC Endpoints (S3, Kinesis, STS, Databricks Endpoints)
     - Egress Firewall
     - S3 Root Bucket
-    - Cross Account IAM Role
+    - Cross Account - IAM Role
 
 - Workspace Deployment
     - Credential Configuration
