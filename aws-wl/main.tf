@@ -15,6 +15,7 @@ locals {
   firewall_protocol_deny_list  = split(",", var.firewall_protocol_deny_list)
 }
 
+// Create External Databricks Workspace
 module "databricks_mws_workspace" {
   source = "./modules/databricks_workspace"
   providers = {
@@ -34,4 +35,22 @@ module "databricks_mws_workspace" {
   customer_name                = var.customer_name
   authoritative_user_email     = var.authoritative_user_email
   authoritative_user_full_name = var.authoritative_user_full_name
+}
+
+// Add Optional WL Co-Branding Features
+module "wl_co_branding" {
+  source = "./modules/wl_co_branding"
+  providers = {
+    databricks = databricks.created_workspace
+  }
+
+  sidebarLogoActive = var.sidebarLogoActive
+  sidebarLogoInactive = var.sidebarLogoInactive
+  sidebarLogoText = var.sidebarLogoText
+  homePageWelcomeMessage = var.homePageWelcomeMessage
+  homePageLogo = var.homePageLogo
+  homePageLogoWidth = var.homePageLogoWidth
+  productName = var.productName
+  loginLogo = var.loginLogo
+  loginLogoWidth = var.loginLogoWidth
 }

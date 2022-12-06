@@ -33,3 +33,16 @@ firewall_protocol_deny_list = "ICMP,FTP,SSH"
 customer_name = 
 authoritative_user_email = 
 authoritative_user_full_name = 
+
+// Co-Branding - WL Variables
+sidebarLogoActive = "https://mlflow.org/images/MLflow-logo-final-white-TM.png"
+sidebarLogoInactive = "https://databricks.com/wp-content/uploads/2020/04/Logo-mlflow-color.png"
+sidebarLogoText = "Delta Inc."
+
+homePageWelcomeMessage = "Let the Data Science begin"
+homePageLogo = "https://docs.delta.io/latest/_static/delta-lake-logo.png"
+homePageLogoWidth = "200px"
+
+productName = "Koalas Analytics Studio"
+loginLogo = "https://raw.githubusercontent.com/databricks/koalas/master/icons/koalas-logo.png"
+loginLogoWidth = "300px"

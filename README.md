@@ -19,6 +19,7 @@ This Terraform Quickstart is meant to be a foundation for creating reusable Whit
     - Storage Configuration
     - Network Configuration (Backend PrivateLink Enabled)
     - External User Parameters (i.e. Authoritative User Parameters)
+    - Co-Branding Options (Login Page, Home Page, Welcome Message)
 
 ![Architecture Diagram](https://github.com/JDBraun/wl-terraform-quickstart/blob/main/img/White%20Label%20-%20Network%20Topology.png)
 
