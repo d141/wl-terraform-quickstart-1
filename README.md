@@ -9,7 +9,7 @@ This Terraform Quickstart is meant to be a foundation for creating reusable Whit
 2. Install Terraform
 https://developer.hashicorp.com/terraform/downloads
 
-3. Fill out example.tfvars
+3. Fill out `example.tfvars`
 
 4. Run `terraform init`
 
