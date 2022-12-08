@@ -2,6 +2,23 @@
 
 This Terraform Quickstart is meant to be a foundation for creating reusable White Label solutions within your AWS environment.
 
+# Getting Started
+
+1. Clone this Repo 
+
+2. Install Terraform
+https://developer.hashicorp.com/terraform/downloads
+
+3. Fill out example.tfvars
+
+4. Run `terraform init`
+
+5. Run `terraform validate`
+
+6. From `aws-wl` directory, run `terraform plan -var-file ../example.tfvars`
+
+7. Run `terraform apply -var-file ../example.tfvars`
+
 # Terraform Script
 
 - Data Plane Creation
