@@ -1,13 +1,12 @@
 # Databricks White Label (WL) - Terraform QuickStart
 
-This Terraform Quickstart is meant to be a foundation for creating reusable White Label solutions within your AWS environment.
+This Terraform Quickstart is meant to be a **foundation** for creating reusable White Label solutions within your AWS environment.
 
 # Getting Started
 
 1. Clone this Repo 
 
-2. Install Terraform
-https://developer.hashicorp.com/terraform/downloads
+2. Install [Terraform](https://developer.hashicorp.com/terraform/downloads)
 
 3. Fill out `example.tfvars`
 
@@ -43,21 +42,21 @@ https://developer.hashicorp.com/terraform/downloads
 # Areas of Customization:
 
 - Security - Add groups, users, entitlements, and assign IP access lists of your customers:
-    - Group Management: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/group
-    - User Management: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/user
-    - Entitlements: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/entitlements
-    - IP Access List: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/ip_access_list
+    - [Group Management](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/group)
+    - [User Management](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/user)
+    - [Entitlements](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/entitlements)
+    - [IP Access List](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/ip_access_list)
 
 - Cluster Management - Precreate clusters, restrict the clusters that can be created in the workspace, and assign the proper instance profile: 
-    - Cluster Creation: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/cluster
-    - Cluster Policy Creation + Assignment: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/cluster_policy
-    - Instance Profile: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/instance_profile
+    - [Cluster Creation](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/cluster)
+    - [Cluster Policy Creation + Assignment](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/cluster_policy)
+    - [Instance Profile](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/instance_profile)
 
 - Unity Catalog - Assign a metastore and catalog to a workspace, then grant only a subset of data for the customer:
-    - Metastore Creation: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/metastore
-    - Metastore Assignment: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/metastore_assignment
-    - Catalog Creation + Assignment: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/catalog
-    - Data Grants: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/grants
+    - [Metastore Creation](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/metastore)
+    - [Metastore Assignment](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/metastore_assignment)
+    - [Catalog Creation + Assignment](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/catalog)
+    - [Data Grants](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/grants)
 
 - Repos - Preload notebooks that process data: 
-    - Repo Creation: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/repo
+    - [Repo Creation](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/repo)
