@@ -2,7 +2,9 @@
 
 This Terraform Quickstart is meant to be a **foundation** for creating reusable White Label Databricks solution within your AWS environment.
 
-**Disclaimer**: There is no dedicated warranty or support for this Terraform script. Please raise GitHub issues as needed.
+**Disclaimers**: 
+- There is no dedicated warranty or support for this Terraform script. Please raise GitHub issues as needed.
+- Please contact your Databricks representative if you're interested in a white label solution. This QuickStart will **not** work on a standard Databricks account.
 
 # Getting Started
 
@@ -12,17 +14,21 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
 
 3. Fill out `example.tfvars` and place in `aws-wl` directory
 
-4. Run `terraform init`
+4. **(Optional):** Fill out `customResources.json` for reference links on Home Page
 
-5. Run `terraform validate`
+5. CD into `aws-wl`
 
-6. From `aws-wl` directory, run `terraform plan -var-file ../example.tfvars`
+5. Run `terraform init`
 
-7. Run `terraform apply -var-file ../example.tfvars`
+6. Run `terraform validate`
+
+7. From `aws-wl` directory, run `terraform plan -var-file ../example.tfvars`
+
+8. Run `terraform apply -var-file ../example.tfvars`
 
 # Terraform Script
 
-- Data Plane Creation
+- **Data Plane Creation:**
     - Workspace Subnets
     - Security Groups
     - NACLs
@@ -32,13 +38,12 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
     - S3 Root Bucket
     - Cross Account - IAM Role
 
-- Workspace Deployment
+- **Workspace Deployment:**
     - Credential Configuration
     - Storage Configuration
     - Network Configuration (Backend PrivateLink Enabled)
     - External User Parameters (i.e. Authoritative User Parameters)
     - Co-Branding Options (Login Page, Home Page, Welcome Message)
-
 
 # Network Diagram
 
@@ -54,22 +59,22 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
 
 # Possible Areas of Additional Customization:
 
-- Security - Add groups, users, entitlements, and assign IP access lists of your customers:
+- **Security:** Add groups, users, entitlements, and assign IP access lists of your customers:
     - [Group Management](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/group)
     - [User Management](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/user)
     - [Entitlements](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/entitlements)
     - [IP Access List](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/ip_access_list)
 
-- Cluster Management - Precreate clusters, restrict the clusters that can be created in the workspace, and assign the proper instance profile: 
+- **Cluster Management:** Precreate clusters, restrict the clusters that can be created in the workspace, and assign the proper instance profile: 
     - [Cluster Creation](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/cluster)
     - [Cluster Policy Creation + Assignment](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/cluster_policy)
     - [Instance Profile](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/instance_profile)
 
-- Unity Catalog - Assign a metastore and catalog to a workspace, then grant only a subset of data for the customer:
+- **Unity Catalog:** Assign a metastore and catalog to a workspace, then grant only a subset of data for the customer:
     - [Metastore Creation](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/metastore)
     - [Metastore Assignment](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/metastore_assignment)
     - [Catalog Creation + Assignment](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/catalog)
     - [Data Grants](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/grants)
 
-- Repos - Preload notebooks that process data: 
+- **Repos:** Preload notebooks that process data: 
     - [Repo Creation](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/repo)
