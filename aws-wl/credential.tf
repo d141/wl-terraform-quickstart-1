@@ -79,16 +79,3 @@ resource "aws_iam_role_policy" "this" {
           }
   )
 }
-
-# resource "time_sleep" "wait_for_cross_account_role" {
-#   depends_on      = [aws_iam_role_policy.this, aws_iam_role.cross_account_role]
-#   create_duration = "20s"
-# }
-
-# resource "databricks_mws_credentials" "this" {
-#   provider         = databricks.mws
-#   account_id       = var.databricks_account_id
-#   role_arn         = aws_iam_role.cross_account_role.arn
-#   credentials_name = "${local.prefix}-credentials"
-#   depends_on       = [time_sleep.wait_for_cross_account_role]
-# }

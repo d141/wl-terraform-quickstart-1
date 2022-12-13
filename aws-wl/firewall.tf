@@ -1,3 +1,4 @@
+// FQDN Allow List
 resource "aws_networkfirewall_rule_group" "databricks_fqdn_allowlist" {
   capacity = 100
   name     = "${local.prefix}-${var.region}-databricks-fqdn-allowlist"
@@ -24,6 +25,7 @@ resource "aws_networkfirewall_rule_group" "databricks_fqdn_allowlist" {
   }
 }
 
+// Protocol Deny LIst
 resource "aws_networkfirewall_rule_group" "databricks_protocol_denylist" {
   capacity    = 100
   name        = "${local.prefix}-databricks-protocol-denylist"
@@ -62,6 +64,8 @@ resource "aws_networkfirewall_rule_group" "databricks_protocol_denylist" {
   }
 }
 
+
+// NFW Policy
 resource "aws_networkfirewall_firewall_policy" "databricks_nfw_policy" {
   name = "${local.prefix}-databricks-nfw-policy"
   firewall_policy {
@@ -79,6 +83,7 @@ resource "aws_networkfirewall_firewall_policy" "databricks_nfw_policy" {
   }
 }
 
+// Firewall
 resource "aws_networkfirewall_firewall" "nfw" {
   name                = "${local.prefix}-nfw"
   firewall_policy_arn = aws_networkfirewall_firewall_policy.databricks_nfw_policy.arn

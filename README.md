@@ -1,6 +1,8 @@
-# Databricks White Label (WL) - Terraform QuickStart
+# White Label (WL) - Terraform QuickStart
 
-This Terraform Quickstart is meant to be a **foundation** for creating reusable White Label solutions within your AWS environment.
+This Terraform Quickstart is meant to be a **foundation** for creating reusable White Label Databricks solution within your AWS environment.
+
+**Disclaimer**: There is no dedicated warranty or support for this Terraform script. Please raise GitHub issues as needed.
 
 # Getting Started
 
@@ -8,7 +10,7 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
 
 2. Install [Terraform](https://developer.hashicorp.com/terraform/downloads)
 
-3. Fill out `example.tfvars`
+3. Fill out `example.tfvars` and place in `aws-wl` directory
 
 4. Run `terraform init`
 
