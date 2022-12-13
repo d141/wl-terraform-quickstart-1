@@ -23,7 +23,7 @@ relay_vpce_service = ""
 workspace_vpce_service = ""
 
 //Regional Metastore Variable: https://docs.databricks.com/administration-guide/cloud-configurations/aws/customer-managed-vpc.html#configure-a-firewall-and-outbound-access-optional
-metastore_url = "mdb7sywh50xhpr.chkweekm4xjq.us-east-1.rds.amazonaws.com"
+metastore_url = ""
 
 // Firewall
 firewall_allow_list = ""
