@@ -50,7 +50,7 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
 
 # Home Screen Example
 
-![Login Screen](https://github.com/JDBraun/wl-terraform-quickstart/blob/main/img/White%20Label%20-%Home%20Screen%20Example.png)
+![Home Screen](https://github.com/JDBraun/wl-terraform-quickstart/blob/main/img/White%20Label%20-%Home%20Screen%20Example.png)
 
 # Areas of Customization:
 
