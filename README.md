@@ -39,7 +39,18 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
     - External User Parameters (i.e. Authoritative User Parameters)
     - Co-Branding Options (Login Page, Home Page, Welcome Message)
 
+
+# Network Diagram
+
 ![Architecture Diagram](https://github.com/JDBraun/wl-terraform-quickstart/blob/main/img/White%20Label%20-%20Network%20Topology.png)
+
+# Login Screen Example
+
+![Login Screen](https://github.com/JDBraun/wl-terraform-quickstart/blob/main/img/White%20Label%20-%20Login%20Screen%20Example.png)
+
+# Home Screen Example
+
+![Login Screen](https://github.com/JDBraun/wl-terraform-quickstart/blob/main/img/White%20Label%20-%Home%20Screen%20Example.png)
 
 # Areas of Customization:
 
