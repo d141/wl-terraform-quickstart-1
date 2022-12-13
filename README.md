@@ -50,9 +50,9 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
 
 # Home Screen Example
 
-![Home Screen](https://github.com/JDBraun/wl-terraform-quickstart/blob/main/img/White%20Label%20-%Home%20Screen%20Example.png)
+![Home Screen](https://github.com/JDBraun/wl-terraform-quickstart/blob/main/img/White%20Label%20-%20Home%20Screen%20Example.png)
 
-# Areas of Customization:
+# Possible Areas of Additional Customization:
 
 - Security - Add groups, users, entitlements, and assign IP access lists of your customers:
     - [Group Management](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/group)
