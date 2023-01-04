@@ -23,6 +23,11 @@ variable "aws_secret_key" {
   sensitive = true
 }
 
+variable "data_bucket" {
+  type = string
+  sensitive = true
+}
+
 variable "resource_owner" {
   type = string
   sensitive = true

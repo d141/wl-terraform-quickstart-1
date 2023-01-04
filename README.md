@@ -5,6 +5,7 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
 **Disclaimers**: 
 - There is no dedicated warranty or support for this Terraform script. Please raise GitHub issues as needed.
 - Please contact your Databricks representative if you're interested in a white label solution. This QuickStart will **not** work on a standard Databricks account.
+- This QuickStart **will** create a SQL warehouse and data engineering cluster in the workspace. Please be considerate and shut these downs for cost savings.
 
 # Getting Started
 
@@ -43,7 +44,12 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
     - Storage Configuration
     - Network Configuration (Backend PrivateLink Enabled)
     - External User Parameters (i.e. Authoritative User Parameters)
-    - Co-Branding Options (Login Page, Home Page, Welcome Message)
+
+- **Post Workspace Deployment:**
+    - Data Engineering Cluster 
+    - SQL Warehouse
+    - Instance Profile
+    - Co-Branding Option
 
 # Network Diagram
 
@@ -66,9 +72,7 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
     - [IP Access List](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/ip_access_list)
 
 - **Cluster Management:** Precreate clusters, restrict the clusters that can be created in the workspace, and assign the proper instance profile: 
-    - [Cluster Creation](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/cluster)
     - [Cluster Policy Creation + Assignment](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/cluster_policy)
-    - [Instance Profile](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/instance_profile)
 
 - **Unity Catalog:** Assign a metastore and catalog to a workspace, then grant only a subset of data for the customer:
     - [Metastore Creation](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/metastore)

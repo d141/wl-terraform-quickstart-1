@@ -8,6 +8,7 @@ resource_prefix = "wl-terraform-quickstart"
 // AWS Variables
 aws_access_key = ""
 aws_secret_key = ""
+data_bucket = ""
 
 // Dataplane Variables
 region = "us-east-1"

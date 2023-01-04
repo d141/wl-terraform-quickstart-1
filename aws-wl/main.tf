@@ -13,6 +13,7 @@ locals {
   dbfsname                     = join("", [local.prefix, "-", var.region, "-", "dbfsroot"]) 
   firewall_allow_list          = split(",", var.firewall_allow_list)
   firewall_protocol_deny_list  = split(",", var.firewall_protocol_deny_list)
+  data_bucket                  = var.data_bucket
 }
 
 // Create External Databricks Workspace
@@ -53,4 +54,17 @@ module "wl_co_branding" {
   productName = var.productName
   loginLogo = var.loginLogo
   loginLogoWidth = var.loginLogoWidth
+  depends_on = [module.databricks_mws_workspace]
+}
+
+// Cluster configurations
+module "cluster_configuration" {
+  source = "./modules/cluster_configuration"
+  providers = {
+    databricks = databricks.created_workspace
+  }
+
+  instance_profile = aws_iam_instance_profile.s3_instance_profile.arn
+  customer_name = var.customer_name
+  depends_on = [module.databricks_mws_workspace]
 }
