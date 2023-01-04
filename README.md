@@ -37,7 +37,8 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
     - AWS VPC Endpoints (S3, Kinesis, STS, Databricks Endpoints)
     - Egress Firewall
     - S3 Root Bucket
-    - Cross Account - IAM Role
+    - Cross Account IAM Role + Policy
+    - S3 Instance Profile IAM Role + Policy
 
 - **Workspace Deployment:**
     - Credential Configuration
@@ -48,7 +49,7 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
 - **Post Workspace Deployment:**
     - Data Engineering Cluster 
     - SQL Warehouse
-    - Instance Profile
+    - Instance Profile Registration
     - Co-Branding Option
 
 # Network Diagram
