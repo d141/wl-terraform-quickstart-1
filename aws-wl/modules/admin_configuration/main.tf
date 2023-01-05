@@ -6,6 +6,6 @@ resource "databricks_workspace_conf" "just_config_map" {
         "enableExportNotebook": "false", 
         "enableUploadDataUis": "false", 
         "enableWebTerminal": "false", 
-        "enableResultsDownloading" = "false"
+        "enableResultsDownloading": "false"
     }
 }
