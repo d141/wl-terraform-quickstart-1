@@ -36,6 +36,7 @@ module "databricks_mws_workspace" {
   customer_name                = var.customer_name
   authoritative_user_email     = var.authoritative_user_email
   authoritative_user_full_name = var.authoritative_user_full_name
+  depends_on = [aws_networkfirewall_firewall.nfw]
 }
 
 // Add Optional WL Co-Branding Features
@@ -54,6 +55,16 @@ module "wl_co_branding" {
   productName = var.productName
   loginLogo = var.loginLogo
   loginLogoWidth = var.loginLogoWidth
+  depends_on = [module.databricks_mws_workspace]
+}
+
+// Admin configurations
+module "admin_configuration" {
+  source = "./modules/admin_configuration"
+  providers = {
+    databricks = databricks.created_workspace
+  }
+
   depends_on = [module.databricks_mws_workspace]
 }
 

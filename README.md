@@ -46,10 +46,16 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
     - External User Parameters (i.e. Authoritative User Parameters)
 
 - **Post Workspace Deployment:**
-    - Data Engineering Cluster 
-    - SQL Warehouse
+    - Data Engineering Cluster <- commented out for cost savings
+    - SQL Warehouse <- commented out for cost savings
     - Instance Profile
     - Co-Branding Option
+    
+- **Admin Configurations:**
+    - Disable Notebook Exporting
+    - Disable Upload Data using the UI
+    - Disable Download button for notebook results
+    - Disable Web Terminal
 
 # Network Diagram
 
