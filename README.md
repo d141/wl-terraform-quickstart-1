@@ -34,6 +34,8 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
     - Security Groups
     - NACLs
     - Route Tables
+    - NAT Gateway
+    - Internet Gateway
     - AWS VPC Endpoints (S3, Kinesis, STS, Databricks Endpoints)
     - Egress Firewall
     - S3 Root Bucket
