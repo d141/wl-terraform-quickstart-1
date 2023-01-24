@@ -13,10 +13,10 @@ data_bucket = ""
 // Dataplane Variables
 region = "us-east-1"
 vpc_cidr_range = "10.0.0.0/18"
-private_subnets_cidr = "10.0.32.0/22,10.0.36.0/22"
-public_subnets_cidr = "10.0.40.0/22,10.0.44.0/22"
-firewall_subnets_cidr = "10.0.48.0/22,10.0.52.0/22"
-privatelink_subnets_cidr = "10.0.56.0/22"
+private_subnets_cidr = "10.0.0.0/22, 10.0.4.0/22"
+public_subnets_cidr = "10.0.8.0/25,10.0.8.128/25"
+firewall_subnets_cidr = "10.0.9.0/25,10.0.9.128/25"
+privatelink_subnets_cidr = "10.0.10.0/25,10.0.10.128/25"
 availability_zones = "us-east-1a,us-east-1b"
 
 // Regional Private Link Variables: https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html#regional-endpoint-reference
