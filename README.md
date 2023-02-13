@@ -6,6 +6,7 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
 - There is no dedicated warranty or support for this Terraform script. Please raise GitHub issues as needed.
 - Please contact your Databricks representative if you're interested in a white label solution. This QuickStart will **not** work on a standard Databricks account.
 - This QuickStart **will** create a SQL warehouse and data engineering cluster in the workspace. Please be considerate and shut these downs for cost savings.
+- Please use proper password security and management. For more information see [here](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/variables/managing-variables).
 
 # Getting Started
 
