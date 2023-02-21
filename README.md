@@ -24,9 +24,9 @@ This Terraform Quickstart is meant to be a **foundation** for creating reusable 
 
 6. Run `terraform validate`
 
-7. From `aws-wl` directory, run `terraform plan -var-file ../example.tfvars`
+7. From `aws-wl` directory, run `terraform plan -var-file example.tfvars`
 
-8. Run `terraform apply -var-file ../example.tfvars`
+8. Run `terraform apply -var-file example.tfvars`
 
 # Terraform Script
 
