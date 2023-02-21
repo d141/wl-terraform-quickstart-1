@@ -13,7 +13,7 @@ data_bucket = ""
 // Dataplane Variables
 region = "us-east-1"
 vpc_cidr_range = "10.0.0.0/18"
-private_subnets_cidr = "10.0.0.0/22, 10.0.4.0/22"
+private_subnets_cidr = "10.0.0.0/22,10.0.4.0/22"
 public_subnets_cidr = "10.0.8.0/25,10.0.8.128/25"
 firewall_subnets_cidr = "10.0.9.0/25,10.0.9.128/25"
 privatelink_subnets_cidr = "10.0.10.0/25,10.0.10.128/25"
